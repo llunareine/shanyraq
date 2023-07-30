@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "project-sanyraq"
+version = "0.1.0"
+description = ""
+authors = ["Aiganym <llunareine@gmail.com>"]
+readme = "README.md"
+packages = [{include = "project_sanyraq"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.100.0"
+uvicorn = "^0.23.1"
+sqlalchemy = "^2.0.19"
+pydantic = "^2.1.0"
+alembic = "^1.11.1"
+jose = "^1.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
