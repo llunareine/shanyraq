@@ -22,7 +22,6 @@ class UserResponse(BaseModel):
     city: str
 
 class UserUpdate(BaseModel):
-    # phone: str
     name: str
     city: str
 
