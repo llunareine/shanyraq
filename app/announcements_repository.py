@@ -1,3 +1,6 @@
+from datetime import datetime
+from typing import Optional
+
 from fastapi import HTTPException
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
@@ -24,6 +27,7 @@ class AnnouncementResponse(BaseModel):
     area: float
     rooms_count: int
     description: str
+    created_at: Optional[datetime]
     user_id: int
     total_comments: int = 0
 
@@ -88,6 +92,9 @@ class AnnouncementRepository:
         db.execute(delete_data)
         db.commit()
 
+    @staticmethod
+    def get_all_announcements(db:Session):
+        return  db.query(models.Announcement).all()
 
     @staticmethod
     def get_total_comments(announcement_id: int, db: Session):
@@ -99,4 +106,5 @@ class AnnouncementRepository:
             models.Comment.announcement_id == announcement_id).scalar()
 
         return comment_count
+
 

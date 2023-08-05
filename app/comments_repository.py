@@ -1,3 +1,6 @@
+from datetime import datetime
+from typing import Optional
+
 from fastapi import HTTPException
 from sqlalchemy import update,delete
 from pydantic import BaseModel
@@ -12,6 +15,7 @@ class CommentResponse(BaseModel):
     id: int
     content: str
     user_id: int
+    created_at: Optional[datetime]
 
 
 class CommentRepository:

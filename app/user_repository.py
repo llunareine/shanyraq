@@ -22,6 +22,7 @@ class UserResponse(BaseModel):
     city: str
 
 class UserUpdate(BaseModel):
+    phone: str
     name: str
     city: str
 
@@ -53,7 +54,7 @@ class UsersRepository:
 
     @staticmethod
     def updated_user(db: Session, user, user_update: UserUpdate):
-        db_user_update = update(models.User).where(models.User.email == user.email).values(name=user_update.name, city=user_update.city)
+        db_user_update = update(models.User).where(models.User.email == user.email).values(phone=user_update.phone, name=user_update.name, city=user_update.city)
 
 
         db.execute(db_user_update)
