@@ -105,9 +105,6 @@ def search_announcements(
     total_announcements = query.count()
     announcements = query.offset((offset - 1) * limit).limit(limit).all()
 
-    for announcement in announcements:
-        announcement.total_comments = announcement_repo.get_total_comments(db=db, announcement_id=announcement.id)
-
     return {
         "total": total_announcements,
         "announcements": announcements
@@ -128,7 +125,6 @@ def get_announcement(id: int, db: Session = Depends(get_db)):
     announcement = announcement_repo.get_announcement_by_id(db, id)
     if not announcement:
         raise HTTPException(status_code=404, detail="Announcement does not exist")
-    announcement.total_comments = announcement_repo.get_total_comments(db=db, announcement_id=id)
     return announcement
 
 

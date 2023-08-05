@@ -6,6 +6,7 @@ from sqlalchemy import update,delete
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from . import models
+from .announcements_repository import AnnouncementRepository
 
 
 class CommentRequest(BaseModel):
@@ -23,6 +24,11 @@ class CommentRepository:
     def create_comment(db: Session, user_id, announcement_id, comment: CommentRequest):
         db_comment = models.Comment(content=comment.content, user_id=user_id, announcement_id=announcement_id)
         db.add(db_comment)
+        query = update(models.Announcement).where(models.Announcement.id == announcement_id).values(
+            total_comments=AnnouncementRepository.get_total_comments(announcement_id, db) + 1)
+        db.execute(query)
+
+
         db.commit()
         db.refresh(db_comment)
         return db_comment
