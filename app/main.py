@@ -105,6 +105,8 @@ def search_announcements(
     total_announcements = query.count()
     announcements = query.offset((offset - 1) * limit).limit(limit).all()
 
+    for announcement in announcements:
+        announcement.total_comments = announcement_repo.get_total_comments(db=db, announcement_id=announcement.id)
 
     return {
         "total": total_announcements,
@@ -171,6 +173,7 @@ def create_comment(comment: CommentRequest,
     user: UserResponse = Depends(verificate_user),
     db: Session = Depends(get_db)
 ):
+
     created_comment = comment_repo.create_comment(db=db, comment=comment, announcement_id=id_announcement, user_id=user.id)
     return created_comment
 
